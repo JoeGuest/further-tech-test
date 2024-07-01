@@ -6,30 +6,34 @@ function App() {
     <>
       <div className="card">
         <table>
-          <tr className="table-header">
-            <td>Name</td>
-            <td>Timezone</td>
-            <td>Signup Date</td>
-            <td>Request Source</td>
-            <td>Investment Date</td>
-            <td>Investment Time</td>
-            <td>Refund Request Date</td>
-            <td>Refund Request Time</td>
-            <td>Eligible for Refund</td>
-          </tr>
-          {reversalRequestsRawData.map((request) => (
-            <tr key={request.name}>
-              <td>{request.name}</td>
-              <td>{request.timezone}</td>
-              <td>{request.signupDate}</td>
-              <td>{request.requestSource}</td>
-              <td>{request.investmentDate}</td>
-              <td>{request.investmentTime}</td>
-              <td>{request.refundRequestDate}</td>
-              <td>{request.refundRequestTime}</td>
-              <td>✅</td>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Timezone</th>
+              <th>Signup Date</th>
+              <th>Request Source</th>
+              <th>Investment Date</th>
+              <th>Investment Time</th>
+              <th>Refund Request Date</th>
+              <th>Refund Request Time</th>
+              <th>Eligible for Refund</th>
             </tr>
-          ))}
+          </thead>
+          <tbody>
+            {reversalRequestsRawData.map((request) => (
+              <tr key={request.name}>
+                <td>{request.name}</td>
+                <td>{request.timezone}</td>
+                <td>{request.signupDate}</td>
+                <td>{request.requestSource}</td>
+                <td>{request.investmentDate}</td>
+                <td>{request.investmentTime}</td>
+                <td>{request.refundRequestDate}</td>
+                <td>{request.refundRequestTime}</td>
+                <td>✅</td>
+              </tr>
+            ))}
+          </tbody>
         </table>
       </div>
     </>
