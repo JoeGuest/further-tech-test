@@ -47,3 +47,32 @@ tbody td {
 tbody tr {
   transition: background-color 0.1s;
 }
+
+@media (prefers-color-scheme: dark) {
+  table {
+    color: #f1f1f1;
+    background-color: #333;
+  }
+
+  th,
+  td {
+    border-bottom: 1px solid #555;
+  }
+
+  thead th {
+    background-color: #444;
+    color: #f1f1f1;
+  }
+
+  tbody tr:nth-child(even) {
+    background-color: #444;
+  }
+
+  tbody tr:hover {
+    background-color: #555;
+  }
+
+  tbody td {
+    color: #f1f1f1;
+  }
+}
