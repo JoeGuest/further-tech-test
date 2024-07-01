@@ -1,4 +1,10 @@
-function webEligible(tos: "new" | "old", minutesBetween: number) {
+function webEligible({
+  tos,
+  minutesBetween,
+}: {
+  tos: "new" | "old";
+  minutesBetween: number;
+}) {
   if (tos === "new") {
     return minutesBetween / 60 < 16;
   }

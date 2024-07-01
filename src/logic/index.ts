@@ -1,5 +1,5 @@
 import termsOfService from "./terms-of-service";
-import webEligible from "./web-eligible";
 import convertToUtc from "./convert-to-utc";
+import eligible from "./eligible";
 
-export { termsOfService, webEligible, convertToUtc };
+export { termsOfService, convertToUtc, eligible };

@@ -1,16 +1,16 @@
-export type RawRequestData = {
+export type RawRequestData = Readonly<{
   name: string;
   timezone: string;
   signupDate: string;
-  requestSource: string;
+  requestSource: "phone" | "web app";
   investmentDate: string;
   investmentTime: string;
   refundRequestDate: string;
   refundRequestTime: string;
-};
+}>;
 
 // Assumption: data from table is all read as strings
-export const reversalRequestsRawData = [
+export const reversalRequestsRawData: RawRequestData[] = [
   {
     name: "Emma Smith",
     timezone: "US (PST)",

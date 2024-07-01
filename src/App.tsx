@@ -1,10 +1,9 @@
 import "./App.css";
-import { differenceInMinutes } from "date-fns";
 import {
   RawRequestData,
   reversalRequestsRawData,
 } from "./data/reversal-requests";
-import { termsOfService, webEligible, convertToUtc } from "./logic";
+import { termsOfService, convertToUtc, eligible } from "./logic";
 
 function TableRow({ request }: { request: RawRequestData }) {
   const investmentUtcDateTime = convertToUtc({
@@ -18,13 +17,17 @@ function TableRow({ request }: { request: RawRequestData }) {
     time: request.refundRequestTime,
   });
 
-  const minutesBetween = differenceInMinutes(
-    reversalRequestUtcDateTime,
-    investmentUtcDateTime
-  );
+  const tos = termsOfService({
+    signupDate: request.signupDate,
+    timezone: request.timezone,
+  });
 
-  const tos = termsOfService(request.signupDate, request.timezone);
-  const eligible = webEligible(tos, minutesBetween); // TODO: add phone eligibility
+  const requestEligible = eligible({
+    requestSource: request.requestSource,
+    tos,
+    investmentUtcDateTime,
+    reversalRequestUtcDateTime,
+  });
 
   return (
     <tr>
@@ -36,13 +39,13 @@ function TableRow({ request }: { request: RawRequestData }) {
       <td>{request.investmentTime}</td>
       <td>{request.refundRequestDate}</td>
       <td>{request.refundRequestTime}</td>
-      <td>{eligible ? "✅" : "❌"}</td>
+      <td>{requestEligible ? "✅" : "❌"}</td>
     </tr>
   );
 }
 
 function App() {
-  // could fetch the data here or have it as a prop, but for now just use the hardcoded data
+  // could fetch the data here or have it as a prop, but for now just use the hardcoded data from import
 
   return (
     <>
