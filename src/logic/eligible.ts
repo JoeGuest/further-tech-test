@@ -13,12 +13,12 @@ function eligible({
   reversalRequestUtcDateTime: Date;
   investmentUtcDateTime: Date;
 }) {
-  const minutesBetween = differenceInMinutes(
-    reversalRequestUtcDateTime,
-    investmentUtcDateTime
-  );
-
   if (requestSource === "web app") {
+    const minutesBetween = differenceInMinutes(
+      reversalRequestUtcDateTime,
+      investmentUtcDateTime
+    );
+
     return webEligible({ tos, minutesBetween });
   }
 
