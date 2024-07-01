@@ -1,3 +1,14 @@
+export type RawRequestData = {
+  name: string;
+  timezone: string;
+  signupDate: string;
+  requestSource: string;
+  investmentDate: string;
+  investmentTime: string;
+  refundRequestDate: string;
+  refundRequestTime: string;
+};
+
 // Assumption: data from table is all read as strings
 export const reversalRequestsRawData = [
   {
@@ -70,7 +81,6 @@ export const reversalRequestsRawData = [
     refundRequestDate: "12/1/2021",
     refundRequestTime: "12:00",
   },
-
   {
     name: "Priya Sharp",
     timezone: "Europe (CET)",
