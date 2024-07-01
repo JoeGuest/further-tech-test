@@ -1,6 +1,7 @@
 import { parse } from "date-fns";
 import { fromZonedTime } from "date-fns-tz";
 
+// Only valid timezones are supported
 const timezoneLookup = new Map<string, string>([
   ["US (PST)", "America/Los_Angeles"],
   ["Europe (CET)", "Europe/Paris"],
