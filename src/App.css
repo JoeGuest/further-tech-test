@@ -8,3 +8,42 @@
 .card {
   padding: 2em;
 }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 16px;
+  text-align: left;
+}
+
+th,
+td {
+  padding: 0.5em;
+}
+
+thead th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+th,
+td {
+  text-align: center;
+}
+
+tbody td {
+  color: #333;
+}
+
+tbody tr {
+  transition: background-color 0.1s;
+}
