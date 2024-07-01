@@ -1,63 +1,10 @@
 import "./App.css";
-import { parse, differenceInMinutes, isBefore } from "date-fns";
-import { fromZonedTime } from "date-fns-tz";
+import { differenceInMinutes } from "date-fns";
 import {
   RawRequestData,
   reversalRequestsRawData,
 } from "./data/reversal-requests";
-
-const timezoneLookup = new Map<string, string>([
-  ["US (PST)", "America/Los_Angeles"],
-  ["Europe (CET)", "Europe/Paris"],
-  ["Europe (GMT)", "Europe/London"],
-  ["US (EST)", "America/New_York"],
-]);
-
-function convertToUtc({
-  timezone,
-  date,
-  time,
-}: {
-  timezone: string;
-  date: string;
-  time: string;
-}) {
-  const isUsCustomer = timezone.includes("US (");
-  const dateFormat = isUsCustomer ? "M/d/yyyy" : "d/M/yyyy";
-
-  const validTimezone = timezoneLookup.get(timezone);
-
-  if (!validTimezone) {
-    throw new Error(`Unknown timezone: ${timezone}`);
-  }
-
-  const investmentDateTimeStr = `${date} ${time}`;
-
-  const parsedDate = parse(
-    investmentDateTimeStr,
-    `${dateFormat} HH:mm`,
-    new Date()
-  );
-
-  const utcDateTime = fromZonedTime(parsedDate, validTimezone);
-
-  return utcDateTime;
-}
-
-function termsOfService(signupDate: string, timezone: string) {
-  const isUsCustomer = timezone.includes("US (");
-  const dateToCompare = isUsCustomer ? "1/2/2020" : "2/1/2020";
-
-  return isBefore(signupDate, dateToCompare) ? "old" : "new";
-}
-
-function webEligible(tos: "new" | "old", minutesBetween: number) {
-  if (tos === "new") {
-    return minutesBetween / 60 < 16;
-  }
-
-  return minutesBetween / 60 < 8;
-}
+import { termsOfService, webEligible, convertToUtc } from "./logic";
 
 function TableRow({ request }: { request: RawRequestData }) {
   const investmentUtcDateTime = convertToUtc({
@@ -77,14 +24,7 @@ function TableRow({ request }: { request: RawRequestData }) {
   );
 
   const tos = termsOfService(request.signupDate, request.timezone);
-  const eligible = webEligible(tos, minutesBetween);
-
-  // console.log("Name: ", `${request.name}`);
-  // console.log("investmentUtcDateTime: ", `${investmentUtcDateTime}`);
-  // console.log("reversalRequestUtcDateTime: ", `${reversalRequestUtcDateTime}`);
-  // console.log("minutesBetween: ", `${minutesBetween}`);
-  // console.log("tos: ", `${tos}`);
-  // console.log("eligible: ", `${eligible}`);
+  const eligible = webEligible(tos, minutesBetween); // TODO: add phone eligibility
 
   return (
     <tr>
@@ -102,6 +42,8 @@ function TableRow({ request }: { request: RawRequestData }) {
 }
 
 function App() {
+  // could fetch the data here or have it as a prop, but for now just use the hardcoded data
+
   return (
     <>
       <div className="card">
