@@ -1,35 +1,35 @@
-# React + TypeScript + Vite
+# Joseph Guest - Further Tech Test
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is Joseph Guests submission for the Further Tech Test.
 
-Currently, two official plugins are available:
+## Prerequisites
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Node.js
+- NPM
 
-## Expanding the ESLint configuration
+## Installation
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+To get started, clone the repository and run `npm install`.
 
-- Configure the top-level `parserOptions` property like this:
+## Running the app
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: "latest",
-    sourceType: "module",
-    project: ["./tsconfig.json", "./tsconfig.node.json"],
-    tsconfigRootDir: __dirname,
-  },
-};
-```
+To run the application:
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+Run `npm run dev` to start the development server.
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+## Running the tests
+
+Run `npm run test` to execute the unit tests.
+
+# Exercise Requirements
+
+See here: https://gist.github.com/jblok/335fe03094e4772452fb12d1a8a9b9a9
 
 # Notes
 
-Bank holidays?
-What if the phone investment is outside UK working hours? Did it get made the next working day? - Assumption: it got made at the date
+- This solution doesn't take into account bank holidays
+- What if the phone investment is outside UK working hours? Did it get made the next working day? - Assumption: investment made at exact date detailed
+- Looked at the supplied table and wrote a test suite for it, checking what the results should be manually via [savvytime](https://savvytime.com/). Another approach would have been to write tests for the rules first, but I wanted to ensure I was directly testing the intended output
+- Let's store dates as dates, not as 3 separate strings please 😄
