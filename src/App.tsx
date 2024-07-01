@@ -1,7 +1,49 @@
 import "./App.css";
-import { reversalRequestsRawData } from "./data/reversal-requests";
+import { differenceInMinutes } from "date-fns";
+import {
+  RawRequestData,
+  reversalRequestsRawData,
+} from "./data/reversal-requests";
+import { termsOfService, webEligible, convertToUtc } from "./logic";
+
+function TableRow({ request }: { request: RawRequestData }) {
+  const investmentUtcDateTime = convertToUtc({
+    timezone: request.timezone,
+    date: request.investmentDate,
+    time: request.investmentTime,
+  });
+  const reversalRequestUtcDateTime = convertToUtc({
+    timezone: request.timezone,
+    date: request.refundRequestDate,
+    time: request.refundRequestTime,
+  });
+
+  const minutesBetween = differenceInMinutes(
+    reversalRequestUtcDateTime,
+    investmentUtcDateTime
+  );
+
+  const tos = termsOfService(request.signupDate, request.timezone);
+  const eligible = webEligible(tos, minutesBetween); // TODO: add phone eligibility
+
+  return (
+    <tr>
+      <td>{request.name}</td>
+      <td>{request.timezone}</td>
+      <td>{request.signupDate}</td>
+      <td>{request.requestSource}</td>
+      <td>{request.investmentDate}</td>
+      <td>{request.investmentTime}</td>
+      <td>{request.refundRequestDate}</td>
+      <td>{request.refundRequestTime}</td>
+      <td>{eligible ? "✅" : "❌"}</td>
+    </tr>
+  );
+}
 
 function App() {
+  // could fetch the data here or have it as a prop, but for now just use the hardcoded data
+
   return (
     <>
       <div className="card">
@@ -21,17 +63,7 @@ function App() {
           </thead>
           <tbody>
             {reversalRequestsRawData.map((request) => (
-              <tr key={request.name}>
-                <td>{request.name}</td>
-                <td>{request.timezone}</td>
-                <td>{request.signupDate}</td>
-                <td>{request.requestSource}</td>
-                <td>{request.investmentDate}</td>
-                <td>{request.investmentTime}</td>
-                <td>{request.refundRequestDate}</td>
-                <td>{request.refundRequestTime}</td>
-                <td>✅</td>
-              </tr>
+              <TableRow request={request} key={request.name} />
             ))}
           </tbody>
         </table>

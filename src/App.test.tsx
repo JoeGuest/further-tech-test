@@ -5,7 +5,7 @@ import App from "./App";
 
 // Calculate the result manually to test the logic
 const userRefundRequest = [
-  { name: "Emma Smith", eligible: true }, // phone, refund requested 3 hours after, within UK working hours, eligible
+  { name: "Emma Smith", eligible: false }, // phone, refund requested 3 hours after investment, placed on 2pm Sat UK time, ineligible
   { name: "Benjamin Johnson", eligible: false }, // web, refund requested over 24 hours after, ineligible
   { name: "Olivia Davis", eligible: true }, // web, refund requested 7 hours after, eligible
   { name: "Ethan Anderson", eligible: false }, // web, refund requested over 24 hours after, ineligible
@@ -19,10 +19,9 @@ const userRefundRequest = [
 ];
 
 describe("loads and displays user data", async () => {
-  test("renders the table", async () => {
-    render(<App />);
-
-    userRefundRequest.forEach((user) => {
+  userRefundRequest.forEach((user) => {
+    test(`renders ${user.name}'s eligibility`, async () => {
+      render(<App />);
       const name = screen.getByText(user.name);
       expect(name).toHaveTextContent(user.name);
 
@@ -30,9 +29,9 @@ describe("loads and displays user data", async () => {
       const rowCells = row!.querySelectorAll("td");
       const eligibility = rowCells[rowCells.length - 1];
 
-      user.eligible === true
+      user.eligible
         ? expect(eligibility).toHaveTextContent("✅")
-        : expect(eligibility).toHaveTextContent("🚫");
+        : expect(eligibility).toHaveTextContent("❌");
     });
   });
 });
